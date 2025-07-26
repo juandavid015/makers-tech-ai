@@ -1,4 +1,3 @@
-import Chatbot from "@/features/chatbot/components/container";
 
 export default function Home() {
   return (
