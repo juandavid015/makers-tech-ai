@@ -1,0 +1,64 @@
+import { systemPrompt, model } from "@/lib/ai";
+import { smoothStream, streamText } from "ai";
+
+// Allow streaming responses up to 30 seconds
+export const maxDuration = 30;
+
+export async function POST(req: Request) {
+  try {
+    // Validate request method
+    if (req.method !== 'POST') {
+      return new Response('Method not allowed', { status: 405 });
+    }
+
+    // Parse and validate request body
+    let body;
+    try {
+      body = await req.json();
+    } catch (error) {
+      console.error('Invalid JSON in request body', error);
+      return new Response('Invalid JSON in request body', { status: 400 });
+    }
+
+    const { messages } = body;
+
+    // Validate required fields
+    if (!messages || !Array.isArray(messages)) {
+      return new Response('Messages array is required', { status: 400 });
+    }
+
+    // Validate API key
+    if (!process.env.GROQ_API_KEY) {
+      console.error('GROQ_API_KEY is not configured');
+      return new Response('API key not configured', { status: 500 });
+    }
+
+    const result = streamText({
+      model,
+      system: systemPrompt,
+      messages,
+      experimental_transform: smoothStream({
+        delayInMs: 20, // optional: defaults to 10ms
+        chunking: 'word', // optional: defaults to 'word'
+      }),
+    });
+
+    return result.toDataStreamResponse();
+  } catch (error) {
+    console.error('Chat API error:', error);
+    
+    // Return appropriate error response
+    return new Response(
+      JSON.stringify({ 
+        error: 'Internal server error',
+        message: error instanceof Error ? error.message : 'Unknown error occurred'
+      }), 
+      { 
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    );
+  }
+}
