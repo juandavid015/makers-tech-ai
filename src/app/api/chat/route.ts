@@ -1,5 +1,6 @@
 import { systemPrompt, model } from "@/lib/ai";
 import { smoothStream, streamText } from "ai";
+import { tools } from "@/lib/ai/tools";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -24,6 +25,7 @@ export async function POST(req: Request) {
 
     // Validate required fields
     if (!messages || !Array.isArray(messages)) {
+      console.error('Messages array is required');
       return new Response('Messages array is required', { status: 400 });
     }
 
@@ -37,9 +39,12 @@ export async function POST(req: Request) {
       model,
       system: systemPrompt,
       messages,
+      maxSteps: 3,
+      maxTokens: 500,
+      tools,
       experimental_transform: smoothStream({
-        delayInMs: 20, // optional: defaults to 10ms
-        chunking: 'word', // optional: defaults to 'word'
+        delayInMs: 20,
+        chunking: 'word',
       }),
     });
 
@@ -62,3 +67,5 @@ export async function POST(req: Request) {
     );
   }
 }
+
+

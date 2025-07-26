@@ -1,0 +1,425 @@
+{
+  "company": {
+    "name": "Makers Tech",
+    "description": "Premium technology e-commerce company specializing in high-quality computers, laptops, and tech accessories",
+    "founded": "2020",
+    "headquarters": "San Francisco, CA",
+    "website": "https://makerstech.com",
+    "contact": {
+      "email": "support@makerstech.com",
+      "phone": "+1 (555) 123-4567",
+      "hours": "Monday-Friday 9AM-6PM PST"
+    }
+  },
+  "categories": [
+    {
+      "id": "laptops",
+      "name": "Laptops & Computers",
+      "description": "Premium laptops and desktop computers for work and creativity"
+    },
+    {
+      "id": "accessories",
+      "name": "Accessories",
+      "description": "High-quality tech accessories to enhance your setup"
+    },
+    {
+      "id": "software",
+      "name": "Software & Services",
+      "description": "Professional software licenses and tech support services"
+    }
+  ],
+  "products": [
+    {
+      "id": "hp-pavilion-15",
+      "name": "HP Pavilion 15",
+      "category": "laptops",
+      "description": "Perfect for everyday computing with reliable performance",
+      "specs": {
+        "display": "15.6\" FHD (1920x1080)",
+        "processor": "Intel Core i5-1135G7",
+        "ram": "8GB DDR4",
+        "storage": "512GB SSD",
+        "graphics": "Intel Iris Xe Graphics",
+        "battery": "Up to 8 hours",
+        "weight": "3.86 lbs"
+      },
+      "price": 699,
+      "originalPrice": 799,
+      "stock": 3,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/laptops/hp-pavilion-15",
+      "features": [
+        "Fast Intel Core i5 processor",
+        "Crisp 15.6\" FHD display",
+        "Fast SSD storage",
+        "Lightweight design",
+        "Windows 11 Home"
+      ],
+      "tags": ["budget-friendly", "everyday-use", "student-friendly", "gaming-capable"]
+    },
+    {
+      "id": "hp-envy-13",
+      "name": "HP Envy 13",
+      "category": "laptops",
+      "description": "Premium ultrabook with stunning 4K display for creative professionals",
+      "specs": {
+        "display": "13.3\" 4K UHD (3840x2160)",
+        "processor": "Intel Core i7-1165G7",
+        "ram": "16GB DDR4",
+        "storage": "1TB SSD",
+        "graphics": "Intel Iris Xe Graphics",
+        "battery": "Up to 10 hours",
+        "weight": "2.88 lbs"
+      },
+      "price": 1199,
+      "originalPrice": 1399,
+      "stock": 2,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/laptops/hp-envy-13",
+      "features": [
+        "Stunning 4K display",
+        "Powerful Intel Core i7",
+        "16GB RAM for multitasking",
+        "1TB fast SSD",
+        "Premium aluminum build"
+      ],
+      "tags": ["premium", "creative-work", "4k-display"]
+    },
+    {
+      "id": "dell-inspiron-15",
+      "name": "Dell Inspiron 15",
+      "category": "laptops",
+      "description": "Reliable AMD-powered laptop for everyday tasks",
+      "specs": {
+        "display": "15.6\" FHD (1920x1080)",
+        "processor": "AMD Ryzen 5 5500U",
+        "ram": "8GB DDR4",
+        "storage": "256GB SSD",
+        "graphics": "AMD Radeon Graphics",
+        "battery": "Up to 7 hours",
+        "weight": "4.03 lbs"
+      },
+      "price": 549,
+      "originalPrice": 649,
+      "stock": 1,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/laptops/dell-inspiron-15",
+      "features": [
+        "AMD Ryzen 5 processor",
+        "Reliable performance",
+        "Fast SSD boot times",
+        "Comfortable keyboard",
+        "Windows 11 Home"
+      ],
+      "tags": ["budget-friendly", "amd-processor", "reliable", "gaming-capable"]
+    },
+    {
+      "id": "dell-xps-13",
+      "name": "Dell XPS 13",
+      "category": "laptops",
+      "description": "Ultra-premium ultrabook with exceptional build quality and performance",
+      "specs": {
+        "display": "13.4\" FHD (1920x1200)",
+        "processor": "Intel Core i7-1185G7",
+        "ram": "16GB LPDDR4x",
+        "storage": "512GB SSD",
+        "graphics": "Intel Iris Xe Graphics",
+        "battery": "Up to 12 hours",
+        "weight": "2.64 lbs"
+      },
+      "price": 1299,
+      "originalPrice": 1499,
+      "stock": 2,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/laptops/dell-xps-13",
+      "features": [
+        "InfinityEdge display",
+        "Premium aluminum build",
+        "16GB fast LPDDR4x RAM",
+        "Exceptional battery life",
+        "Professional design"
+      ],
+      "tags": ["premium", "ultrabook", "professional", "long-battery", "gaming-capable"]
+    },
+    {
+      "id": "macbook-air-m1",
+      "name": "Apple MacBook Air M1",
+      "category": "laptops",
+      "description": "Revolutionary Apple Silicon laptop with incredible performance and battery life",
+      "specs": {
+        "display": "13.3\" Retina (2560x1600)",
+        "processor": "Apple M1 Chip",
+        "ram": "8GB Unified Memory",
+        "storage": "256GB SSD",
+        "graphics": "8-core GPU",
+        "battery": "Up to 18 hours",
+        "weight": "2.8 lbs"
+      },
+      "price": 999,
+      "originalPrice": 1199,
+      "stock": 4,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/laptops/macbook-air-m1",
+      "features": [
+        "Revolutionary M1 chip",
+        "Incredible 18-hour battery",
+        "Retina display",
+        "Silent fanless design",
+        "macOS Monterey"
+      ],
+      "tags": ["apple-silicon", "long-battery", "fanless", "premium"]
+    },
+    {
+      "id": "macbook-pro-m2",
+      "name": "Apple MacBook Pro M2",
+      "category": "laptops",
+      "description": "Professional-grade laptop with M2 chip for demanding creative work",
+      "specs": {
+        "display": "14\" Liquid Retina (3024x1964)",
+        "processor": "Apple M2 Chip",
+        "ram": "16GB Unified Memory",
+        "storage": "512GB SSD",
+        "graphics": "10-core GPU",
+        "battery": "Up to 20 hours",
+        "weight": "3.5 lbs"
+      },
+      "price": 1999,
+      "originalPrice": 2199,
+      "stock": 1,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/laptops/macbook-pro-m2",
+      "features": [
+        "Powerful M2 chip",
+        "Liquid Retina display",
+        "20-hour battery life",
+        "Professional performance",
+        "macOS Ventura"
+      ],
+      "tags": ["professional", "m2-chip", "creative-work", "premium"]
+    },
+    {
+      "id": "logitech-mx-master-3",
+      "name": "Logitech MX Master 3",
+      "category": "accessories",
+      "description": "Premium wireless mouse with advanced ergonomics and precision",
+      "specs": {
+        "connectivity": "Bluetooth/2.4GHz",
+        "battery": "Up to 70 days",
+        "dpi": "4000 DPI",
+        "buttons": "7 programmable",
+        "weight": "141g"
+      },
+      "price": 99,
+      "originalPrice": 129,
+      "stock": 15,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/accessories/logitech-mx-master-3",
+      "features": [
+        "Ergonomic design",
+        "70-day battery life",
+        "4000 DPI precision",
+        "Programmable buttons",
+        "Cross-platform compatibility"
+      ],
+      "tags": ["wireless", "ergonomic", "premium-mouse", "long-battery"]
+    },
+    {
+      "id": "corsair-k70-rgb",
+      "name": "Corsair K70 RGB",
+      "category": "accessories",
+      "description": "Mechanical gaming keyboard with RGB lighting and premium switches",
+      "specs": {
+        "switches": "Cherry MX Red",
+        "backlighting": "RGB",
+        "connectivity": "USB-C",
+        "keys": "104 keys",
+        "weight": "1.1kg"
+      },
+      "price": 149,
+      "originalPrice": 179,
+      "stock": 8,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/accessories/corsair-k70-rgb",
+      "features": [
+        "Cherry MX Red switches",
+        "Dynamic RGB lighting",
+        "Aluminum frame",
+        "Media controls",
+        "USB-C connection"
+      ],
+      "tags": ["mechanical", "rgb", "gaming", "premium-keyboard"]
+    },
+    {
+      "id": "dell-ultrasharp-27",
+      "name": "Dell UltraSharp 27\" 4K",
+      "category": "accessories",
+      "description": "Professional 4K monitor with exceptional color accuracy",
+      "specs": {
+        "display": "27\" 4K (3840x2160)",
+        "panel": "IPS",
+        "refresh": "60Hz",
+        "response": "5ms",
+        "ports": "HDMI, DisplayPort, USB-C"
+      },
+      "price": 399,
+      "originalPrice": 499,
+      "stock": 5,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/accessories/dell-ultrasharp-27",
+      "features": [
+        "4K resolution",
+        "99% sRGB color",
+        "IPS panel",
+        "USB-C connectivity",
+        "Adjustable stand"
+      ],
+      "tags": ["4k", "professional", "color-accurate", "usb-c"]
+    },
+    {
+      "id": "logitech-c920",
+      "name": "Logitech C920 HD Pro",
+      "category": "accessories",
+      "description": "High-quality webcam for professional video calls and streaming",
+      "specs": {
+        "resolution": "1080p/30fps",
+        "field": "78° wide-angle",
+        "autofocus": "Yes",
+        "microphone": "Stereo",
+        "mount": "Universal clip"
+      },
+      "price": 79,
+      "originalPrice": 99,
+      "stock": 12,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/accessories/logitech-c920",
+      "features": [
+        "1080p HD video",
+        "Wide-angle lens",
+        "Autofocus",
+        "Built-in microphone",
+        "Universal mounting"
+      ],
+      "tags": ["webcam", "hd", "streaming", "video-calls"]
+    },
+    {
+      "id": "razer-deathadder-v3",
+      "name": "Razer DeathAdder V3 Pro",
+      "category": "accessories",
+      "description": "Ultra-lightweight wireless gaming mouse with 30K DPI sensor",
+      "specs": {
+        "connectivity": "Wireless/2.4GHz",
+        "battery": "Up to 90 hours",
+        "dpi": "30,000 DPI",
+        "buttons": "5 programmable",
+        "weight": "63g"
+      },
+      "price": 159,
+      "originalPrice": 179,
+      "stock": 6,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/accessories/razer-deathadder-v3",
+      "features": [
+        "Ultra-lightweight design",
+        "30K DPI optical sensor",
+        "90-hour battery life",
+        "5 programmable buttons",
+        "Razer Speedflex cable"
+      ],
+      "tags": ["gaming", "wireless", "ultra-lightweight", "high-dpi"]
+    },
+    {
+      "id": "steelseries-arctis-7",
+      "name": "SteelSeries Arctis 7",
+      "category": "accessories",
+      "description": "Premium wireless gaming headset with 24-hour battery life",
+      "specs": {
+        "connectivity": "Wireless 2.4GHz",
+        "battery": "Up to 24 hours",
+        "drivers": "40mm",
+        "microphone": "Retractable",
+        "weight": "310g"
+      },
+      "price": 129,
+      "originalPrice": 149,
+      "stock": 9,
+      "imageUrl": "/images/products/placeholder.svg",
+      "refUrl": "/products/accessories/steelseries-arctis-7",
+      "features": [
+        "24-hour battery life",
+        "Lossless 2.4GHz audio",
+        "Retractable microphone",
+        "Comfortable ski goggle headband",
+        "Cross-platform compatibility"
+      ],
+      "tags": ["gaming", "wireless", "headset", "long-battery"]
+    }
+  ],
+  "software": [
+    {
+      "id": "office-365",
+      "name": "Microsoft Office 365",
+      "category": "software",
+      "description": "Complete productivity suite with cloud storage",
+      "price": 69.99,
+      "period": "annual",
+      "features": [
+        "Word, Excel, PowerPoint",
+        "1TB OneDrive storage",
+        "Outlook email",
+        "Teams collaboration",
+        "Always up-to-date"
+      ],
+      "refUrl": "/services/software/office-365"
+    },
+    {
+      "id": "adobe-creative-cloud",
+      "name": "Adobe Creative Cloud",
+      "category": "software",
+      "description": "Professional creative software suite",
+      "price": 599.88,
+      "period": "annual",
+      "features": [
+        "Photoshop, Illustrator",
+        "Premiere Pro, After Effects",
+        "100GB cloud storage",
+        "Font library access",
+        "Regular updates"
+      ],
+      "refUrl": "/services/software/adobe-creative-cloud"
+    }
+  ],
+  "services": [
+    {
+      "id": "tech-support",
+      "name": "Extended Tech Support",
+      "category": "services",
+      "description": "Professional technical support and troubleshooting",
+      "price": 99,
+      "period": "annual",
+      "features": [
+        "24/7 phone support",
+        "Remote assistance",
+        "Hardware diagnostics",
+        "Software troubleshooting",
+        "Priority support queue"
+      ],
+      "refUrl": "/services/support/extended-warranty"
+    },
+    {
+      "id": "setup-service",
+      "name": "Professional Setup Service",
+      "category": "services",
+      "description": "Expert installation and configuration service",
+      "price": 49,
+      "period": "one-time",
+      "features": [
+        "Hardware installation",
+        "Software setup",
+        "Data migration",
+        "System optimization",
+        "User training"
+      ],
+      "refUrl": "/services/setup/professional-installation"
+    }
+  ]
+} 
