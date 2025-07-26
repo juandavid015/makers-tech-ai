@@ -127,3 +127,123 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom prose styles for enhanced markdown rendering */
+@layer components {
+  .prose {
+    @apply text-gray-700 leading-relaxed;
+  }
+  
+  .prose h1 {
+    @apply text-xl font-bold text-gray-900 mb-4 mt-0 border-b border-gray-200 pb-2;
+  }
+  
+  .prose h2 {
+    @apply text-lg font-semibold text-gray-800 mb-3 mt-4 flex items-center gap-2;
+  }
+  
+  .prose h3 {
+    @apply text-base font-medium text-gray-800 mb-2 mt-3;
+  }
+  
+  .prose p {
+    @apply text-gray-700 leading-relaxed mb-3;
+  }
+  
+  .prose strong {
+    @apply font-semibold text-gray-900;
+  }
+  
+  .prose em {
+    @apply text-gray-800 italic;
+  }
+  
+  .prose code {
+    @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-gray-800;
+  }
+  
+  .prose pre {
+    @apply bg-gray-50 p-3 rounded-lg overflow-x-auto border border-gray-200 my-3;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-blue-200 pl-4 italic text-gray-600 my-3 bg-blue-50 py-2 rounded-r;
+  }
+  
+  .prose ul {
+    @apply list-disc pl-6 space-y-1 my-3;
+  }
+  
+  .prose ol {
+    @apply list-decimal pl-6 space-y-1 my-3;
+  }
+  
+  .prose li {
+    @apply text-gray-700;
+  }
+  
+  .prose a {
+    @apply text-blue-600 underline decoration-blue-300 underline-offset-2 hover:text-blue-700 hover:decoration-blue-500 transition-colors;
+  }
+  
+  .prose table {
+    @apply border-collapse w-full my-4;
+  }
+  
+  .prose th {
+    @apply border border-gray-300 px-3 py-2 bg-gray-50 text-left font-semibold text-gray-700;
+  }
+  
+  .prose td {
+    @apply border border-gray-300 px-3 py-2 text-gray-700;
+  }
+  
+  .prose hr {
+    @apply border-gray-200 my-4;
+  }
+  
+  /* Enhanced table styles */
+  .prose table {
+    @apply rounded-lg overflow-hidden shadow-sm;
+  }
+  
+  .prose th:first-child {
+    @apply rounded-tl-lg;
+  }
+  
+  .prose th:last-child {
+    @apply rounded-tr-lg;
+  }
+  
+  .prose tr:last-child td:first-child {
+    @apply rounded-bl-lg;
+  }
+  
+  .prose tr:last-child td:last-child {
+    @apply rounded-br-lg;
+  }
+  
+  /* Enhanced list styles */
+  .prose ul li::marker {
+    @apply text-blue-500;
+  }
+  
+  .prose ol li::marker {
+    @apply text-blue-500 font-semibold;
+  }
+  
+  /* Enhanced blockquote styles */
+  .prose blockquote::before {
+    content: '"';
+    @apply text-4xl text-blue-300 font-bold absolute -top-2 left-2;
+  }
+  
+  /* Enhanced code styles */
+  .prose code:not(pre code) {
+    @apply bg-blue-50 text-blue-700 border border-blue-200;
+  }
+  
+  .prose pre code {
+    @apply bg-transparent text-gray-800 border-none p-0;
+  }
+}
