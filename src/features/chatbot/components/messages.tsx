@@ -2,7 +2,7 @@ import { UIMessage } from "ai";
 import ChatBotMessage from "./message";
 import { cn } from "@/lib/utils";
 import { MessageCircle } from "lucide-react";
-import { useQuickActions } from "@/hooks/useQuickActions";
+import { useQuickActions } from "@/features/chatbot/hooks/useQuickActions";
 
 interface ChatBotMessagesProps {
   messages: UIMessage[];
