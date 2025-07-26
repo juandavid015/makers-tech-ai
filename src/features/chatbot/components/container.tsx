@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { useChat } from "@ai-sdk/react";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import ChatBotMessages from "./messages";
 import ChatBotErrorAlert from "./error-alert";
@@ -15,7 +15,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 
 interface ChatbotContainerProps {
@@ -32,9 +31,11 @@ const Chatbot = ({ className }: ChatbotContainerProps) => {
     error,
     reload,
     stop,
+    setInput,
   } = useChat({});
 
   const isStreaming = status === "streaming";
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   // Smooth scroll to bottom while streaming or new messages are added
   useEffect(() => {
@@ -43,6 +44,15 @@ const Chatbot = ({ className }: ChatbotContainerProps) => {
       container.scrollTop = container.scrollHeight;
     }
   }, [messages, isStreaming]);
+
+  // Handle quick action selection
+  const handleQuickAction = (action: string) => {
+    setInput(action);
+    // Focus the input field
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+  };
 
   return (
     <Sheet>
@@ -66,11 +76,15 @@ const Chatbot = ({ className }: ChatbotContainerProps) => {
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2 text-lg font-semibold">
             <Sparkles className="w-5 h-5" />
-            Chatbot
+            Makers Tech AI
           </SheetTitle>
         </SheetHeader>
 
-        <ChatBotMessages messages={messages} isStreaming={isStreaming} />
+        <ChatBotMessages 
+          messages={messages} 
+          isStreaming={isStreaming} 
+          onQuickAction={handleQuickAction}
+        />
         <ChatBotErrorAlert error={error} reload={reload} />
         <ChatBotControls
           handleSubmit={handleSubmit}
@@ -78,6 +92,7 @@ const Chatbot = ({ className }: ChatbotContainerProps) => {
           input={input}
           isStreaming={isStreaming}
           stop={stop}
+          inputRef={inputRef}
         />
       </SheetContent>
     </Sheet>
