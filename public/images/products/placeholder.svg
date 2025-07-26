@@ -1,0 +1,29 @@
+<svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="300" fill="url(#grad1)"/>
+  
+  <!-- Main container -->
+  <rect x="30" y="30" width="240" height="240" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" rx="8"/>
+  
+  <!-- Camera icon -->
+  <g transform="translate(150, 140)">
+    <!-- Camera body -->
+    <rect x="-25" y="-15" width="50" height="30" fill="#64748b" rx="4"/>
+    <!-- Camera lens -->
+    <circle cx="0" cy="0" r="12" fill="#475569"/>
+    <circle cx="0" cy="0" r="8" fill="#1e293b"/>
+    <!-- Camera flash -->
+    <rect x="20" y="-8" width="6" height="6" fill="#fbbf24" rx="1"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="150" y="220" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#64748b" font-weight="500">Product Image</text>
+  <text x="150" y="240" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#94a3b8">Click to view details</text>
+</svg> 
