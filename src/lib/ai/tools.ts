@@ -9,7 +9,7 @@ import {
   getProductsByPriceRange,
   getProductsInStock,
   getProductsWithDiscount
-} from '@/lib/products';
+} from '@/server/actions/products';
 
 // Product Carousel Tool
 export const productCarouselTool = createTool({
