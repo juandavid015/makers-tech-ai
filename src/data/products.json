@@ -46,10 +46,10 @@
       "price": 699,
       "originalPrice": 799,
       "stock": 3,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/laptops/hp-pavilion-15",
+      "imageUrl": "https://i.pinimg.com/1200x/12/76/62/127662796148686935493eb18ed670e9.jpg",
+      "refUrl": "/products/hp-pavilion-15",
       "features": [
-        "Fast Intel Core i5 processor",
+        "Fast Intel Core i5 processor", 
         "Crisp 15.6\" FHD display",
         "Fast SSD storage",
         "Lightweight design",
@@ -74,8 +74,8 @@
       "price": 1199,
       "originalPrice": 1399,
       "stock": 2,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/laptops/hp-envy-13",
+      "imageUrl": "https://i.pinimg.com/1200x/9b/9c/32/9b9c325bdf797b4da1e0490ef8a1d8e3.jpg",
+      "refUrl": "/products/hp-envy-13",
       "features": [
         "Stunning 4K display",
         "Powerful Intel Core i7",
@@ -102,8 +102,8 @@
       "price": 549,
       "originalPrice": 649,
       "stock": 1,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/laptops/dell-inspiron-15",
+      "imageUrl": "https://i.pinimg.com/1200x/7d/5c/28/7d5c2842cb135c6fac6b13a9b435f8f5.jpg",
+      "refUrl": "/products/dell-inspiron-15",
       "features": [
         "AMD Ryzen 5 processor",
         "Reliable performance",
@@ -130,8 +130,8 @@
       "price": 1299,
       "originalPrice": 1499,
       "stock": 2,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/laptops/dell-xps-13",
+      "imageUrl": "https://i.pinimg.com/1200x/d4/d0/e6/d4d0e68e30117fe5e1c3f200ed04db5d.jpg",
+      "refUrl": "/products/dell-xps-13",
       "features": [
         "InfinityEdge display",
         "Premium aluminum build",
@@ -158,8 +158,8 @@
       "price": 999,
       "originalPrice": 1199,
       "stock": 4,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/laptops/macbook-air-m1",
+      "imageUrl": "https://i.pinimg.com/736x/29/d2/a9/29d2a9e0779462300c13d38860a4cdcf.jpg",
+      "refUrl": "/products/macbook-air-m1",
       "features": [
         "Revolutionary M1 chip",
         "Incredible 18-hour battery",
@@ -186,8 +186,8 @@
       "price": 1999,
       "originalPrice": 2199,
       "stock": 1,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/laptops/macbook-pro-m2",
+      "imageUrl": "https://i.pinimg.com/1200x/65/75/43/65754333a7920e0806e263e2cc9045e9.jpg",
+      "refUrl": "/products/macbook-pro-m2",
       "features": [
         "Powerful M2 chip",
         "Liquid Retina display",
@@ -212,8 +212,8 @@
       "price": 99,
       "originalPrice": 129,
       "stock": 15,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/accessories/logitech-mx-master-3",
+      "imageUrl": "https://i.pinimg.com/1200x/8c/8a/34/8c8a34c234601a8f04afa76c8f432bd8.jpg",
+      "refUrl": "/products/logitech-mx-master-3",
       "features": [
         "Ergonomic design",
         "70-day battery life",
@@ -238,8 +238,8 @@
       "price": 149,
       "originalPrice": 179,
       "stock": 8,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/accessories/corsair-k70-rgb",
+      "imageUrl": "https://i.pinimg.com/736x/48/c2/c1/48c2c114cce33f8cccc1a293d4aae7e2.jpg",
+      "refUrl": "/products/corsair-k70-rgb",
       "features": [
         "Cherry MX Red switches",
         "Dynamic RGB lighting",
@@ -264,8 +264,8 @@
       "price": 399,
       "originalPrice": 499,
       "stock": 5,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/accessories/dell-ultrasharp-27",
+      "imageUrl": "https://i.pinimg.com/1200x/8a/19/b6/8a19b62194faaeb41b6f284fd9e2ba53.jpg",
+      "refUrl": "/products/dell-ultrasharp-27",
       "features": [
         "4K resolution",
         "99% sRGB color",
@@ -290,8 +290,8 @@
       "price": 79,
       "originalPrice": 99,
       "stock": 12,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/accessories/logitech-c920",
+      "imageUrl": "https://i.pinimg.com/736x/ab/18/42/ab1842719028a46d7c5c272c9af94665.jpg",
+      "refUrl": "/products/logitech-c920",
       "features": [
         "1080p HD video",
         "Wide-angle lens",
@@ -316,8 +316,8 @@
       "price": 159,
       "originalPrice": 179,
       "stock": 6,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/accessories/razer-deathadder-v3",
+      "imageUrl": "https://i.pinimg.com/736x/0d/86/80/0d86806c67785ccc811c7f43efd0c2ae.jpg",
+      "refUrl": "/products/razer-deathadder-v3",
       "features": [
         "Ultra-lightweight design",
         "30K DPI optical sensor",
@@ -342,8 +342,8 @@
       "price": 129,
       "originalPrice": 149,
       "stock": 9,
-      "imageUrl": "/images/products/placeholder.svg",
-      "refUrl": "/products/accessories/steelseries-arctis-7",
+      "imageUrl": "https://i.pinimg.com/1200x/b2/9b/aa/b29baa415a9578ec4d75354735f013b5.jpg",
+      "refUrl": "/products/steelseries-arctis-7",
       "features": [
         "24-hour battery life",
         "Lossless 2.4GHz audio",
@@ -369,7 +369,8 @@
         "Teams collaboration",
         "Always up-to-date"
       ],
-      "refUrl": "/services/software/office-365"
+      "refUrl": "/services/software/office-365",
+      "imageUrl": "https://i.pinimg.com/736x/d4/90/2d/d4902dcb202639c4ec5cebb49066293d.jpg"
     },
     {
       "id": "adobe-creative-cloud",
@@ -385,7 +386,8 @@
         "Font library access",
         "Regular updates"
       ],
-      "refUrl": "/services/software/adobe-creative-cloud"
+      "refUrl": "/services/software/adobe-creative-cloud",
+      "imageUrl": "https://i.pinimg.com/736x/0d/45/96/0d459651cbd2818fc5a026bebab40520.jpg  "
     }
   ],
   "services": [
