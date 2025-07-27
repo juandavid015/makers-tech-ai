@@ -1,4 +1,3 @@
-import React from "react";
 import { notFound } from "next/navigation";
 import { getProductById } from "@/server/actions/products";
 import {
@@ -6,13 +5,9 @@ import {
 } from "@/components/products/details-page";
 import ProductDetailsClient from "./product-details-client";
 
-interface ProductDetailsPageProps {
-  params: {
-    id: string;
-  };
-}
 
-const ProductDetailsPage: React.FC<ProductDetailsPageProps> = async ({ params }) => {
+
+const ProductDetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const product = await getProductById(id);
 
