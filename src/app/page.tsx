@@ -211,12 +211,10 @@ const CTASection: React.FC = () => {
 
 export default function Home() {
   return (
-    <ErrorBoundary>
-      <main className="flex flex-col w-full min-h-screen font-sans">
-        <HeroSection />
-        <ProductsSection />
-        <CTASection />
-      </main>
-    </ErrorBoundary>
+    <main className="flex flex-col w-full min-h-screen font-sans">
+      <HeroSection />
+      <ProductsSection />
+      <CTASection />
+    </main>
   );
 }
