@@ -31,18 +31,22 @@ interface InventorySummaryProps {
 // Sub-component: Header
 interface HeaderProps {
   category: string;
+  isSpecificProduct?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ category }) => {
+const Header: React.FC<HeaderProps> = ({ category, isSpecificProduct = false }) => {
   return (
     <div className="flex items-center gap-3 mb-6">
       <Package className="w-6 h-6 text-blue-600" />
       <div>
         <h3 className="text-xl font-semibold text-gray-900">
-          Inventory Summary
+          {isSpecificProduct ? "Product Stock" : "Inventory Summary"}
         </h3>
         <p className="text-sm text-gray-600 capitalize">
-          {category === "all" ? "All Categories" : category}
+          {isSpecificProduct 
+            ? "Specific Product Information"
+            : category === "all" ? "All Categories" : category
+          }
         </p>
       </div>
     </div>
@@ -58,40 +62,40 @@ interface StatsGridProps {
 }
 
 const StatsGrid: React.FC<StatsGridProps> = ({
-  totalProducts,
+  // totalProducts,
   inStock,
-  lowStock,
-  outOfStock,
+  // lowStock,
+  // outOfStock,
 }) => {
   const stats = [
-    {
-      value: totalProducts,
-      label: "Total Products",
-      bgColor: "bg-blue-50",
-      textColor: "text-blue-600",
-    },
+    // {
+    //   value: totalProducts,
+    //   label: "Total Products",
+    //   bgColor: "bg-blue-50",
+    //   textColor: "text-blue-600",
+    // },
     {
       value: inStock,
       label: "In Stock",
       bgColor: "bg-green-50",
       textColor: "text-green-600",
     },
-    {
-      value: lowStock,
-      label: "Low Stock",
-      bgColor: "bg-yellow-50",
-      textColor: "text-yellow-600",
-    },
-    {
-      value: outOfStock,
-      label: "Out of Stock",
-      bgColor: "bg-red-50",
-      textColor: "text-red-600",
-    },
+    // {
+    //   value: lowStock,
+    //   label: "Low Stock",
+    //   bgColor: "bg-yellow-50",
+    //   textColor: "text-yellow-600",
+    // },
+    // {
+    //   value: outOfStock,
+    //   label: "Out of Stock",
+    //   bgColor: "bg-red-50",
+    //   textColor: "text-red-600",
+    // },
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-6">
       {stats.map((stat, index) => (
         <div key={index} className={cn("text-center p-4 rounded-lg", stat.bgColor)}>
           <div className={cn("text-2xl font-bold", stat.textColor)}>
@@ -294,6 +298,9 @@ const InventorySummary: React.FC<InventorySummaryProps> = ({
     outOfStockItems,
   } = data;
 
+  // Determine if this is for a specific product or category
+  const isSpecificProduct = category !== 'all' && totalProducts === 1;
+
   return (
     <div
       className={cn(
@@ -301,7 +308,7 @@ const InventorySummary: React.FC<InventorySummaryProps> = ({
         className
       )}
     >
-      <Header category={category} />
+      <Header category={category} isSpecificProduct={isSpecificProduct} />
       
       <StatsGrid
         totalProducts={totalProducts}

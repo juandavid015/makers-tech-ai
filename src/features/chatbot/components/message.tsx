@@ -141,7 +141,7 @@ const MessageContent = ({
                 );
               }
 
-              // Product Details
+              // Product Details - Enhanced for specific product queries
               if (
                 toolName === "getProductDetails" &&
                 result?.type === "product_details"
@@ -149,15 +149,38 @@ const MessageContent = ({
                 const detailsResult = result as ProductDetailsResult;
                 return (
                   <div key={toolCallId} className="mt-4">
-                    <ProductDetails
-                      product={detailsResult.product}
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        <span className="text-sm font-medium text-blue-800">
+                          Product Information
+                        </span>
+                      </div>
+                      <div className="text-sm text-blue-700">
+                        <strong>{detailsResult.product.name}</strong> - 
+                        <span className={detailsResult.product.stock > 0 ? "text-green-600" : "text-red-600"}>
+                          {detailsResult.product.stock > 0 
+                            ? ` ${detailsResult.product.stock} in stock` 
+                            : " Out of stock"}
+                        </span>
+                        {detailsResult.product.originalPrice && detailsResult.product.originalPrice > detailsResult.product.price && (
+                          <span className="text-orange-600 ml-2">
+                            • ${detailsResult.product.originalPrice - detailsResult.product.price} off
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <ProductCarousel
+                      products={[detailsResult.product]}
                       onProductClick={handleProductClick}
+                      showStock={true}
+                      showFeatures={true}
                     />
                   </div>
                 );
               }
 
-              // Inventory Summary
+              // Inventory Summary - Enhanced for category queries
               if (
                 toolName === "getInventorySummary" &&
                 result?.type === "inventory_summary"
@@ -165,6 +188,30 @@ const MessageContent = ({
                 const summaryResult = result as InventorySummaryResult;
                 return (
                   <div key={toolCallId} className="mt-4">
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span className="text-sm font-medium text-green-800">
+                          Inventory Summary
+                        </span>
+                      </div>
+                      <div className="text-sm text-green-700">
+                        {summaryResult.category !== 'all' && (
+                          <span className="capitalize">{summaryResult.category}: </span>
+                        )}
+                        <span className="font-medium">{summaryResult.inStock} in stock</span>
+                        {summaryResult.lowStock > 0 && (
+                          <span className="text-orange-600 ml-2">
+                            • {summaryResult.lowStock} low stock
+                          </span>
+                        )}
+                        {summaryResult.outOfStock > 0 && (
+                          <span className="text-red-600 ml-2">
+                            • {summaryResult.outOfStock} out of stock
+                          </span>
+                        )}
+                      </div>
+                    </div>
                     <InventorySummary data={summaryResult} />
                   </div>
                 );
