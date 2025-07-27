@@ -4,7 +4,8 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export interface Product {
   id: string;
@@ -30,7 +31,7 @@ interface ProductCardProps {
   compact?: boolean;
 }
 
-// Sub-component: Product Image with badges
+// Sub-component: Product Image
 interface ProductImageProps {
   product: Product;
   showStock: boolean;
@@ -40,16 +41,13 @@ const ProductImage: React.FC<ProductImageProps> = ({ product, showStock }) => {
   const { name, imageUrl, price, originalPrice, stock } = product;
 
   const hasDiscount = originalPrice && originalPrice > price;
-  const discountPercentage = hasDiscount
-    ? Math.round(((originalPrice - price) / originalPrice) * 100)
-    : 0;
 
   return (
-    <div className="relative aspect-square bg-gray-100 overflow-hidden">
+    <div className="relative aspect-square bg-gray-100 overflow-hidden rounded-lg mb-4">
       <img
         src={imageUrl}
         alt={name}
-        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         onError={(e) => {
           console.log(
             `Image failed to load for ${name}, falling back to placeholder`
@@ -58,105 +56,80 @@ const ProductImage: React.FC<ProductImageProps> = ({ product, showStock }) => {
         }}
       />
 
-      {/* Discount Badge */}
-      {hasDiscount && (
-        <Badge className="absolute top-2 left-2 bg-red-500 text-white text-xs">
-          -{discountPercentage}%
-        </Badge>
-      )}
-
-      {/* Stock Badge */}
-      {showStock && (
-        <Badge
-          className={cn(
-            "absolute top-2 right-2 text-xs",
-            stock > 5
-              ? "bg-green-500 text-white"
-              : stock > 0
-              ? "bg-yellow-500 text-white"
-              : "bg-red-500 text-white"
-          )}
-        >
-          {stock > 5
-            ? "In Stock"
-            : stock > 0
-            ? `${stock} left`
-            : "Out of Stock"}
-        </Badge>
-      )}
-    </div>
-  );
-};
-
-// Sub-component: Product Header (Category and Name)
-interface ProductHeaderProps {
-  product: Product;
-}
-
-const ProductHeader: React.FC<ProductHeaderProps> = ({ product }) => {
-  return (
-    <div className="space-y-2">
-      {/* Category */}
-      <div className="flex items-center gap-2">
-        <Badge variant="outline" className="text-xs capitalize">
-          {product.category}
-        </Badge>
-        <ExternalLink className="w-3 h-3 text-gray-400" />
+      {/* Badges - Top Left */}
+      <div className="absolute top-3 left-3 flex flex-col gap-2">
+        {hasDiscount && (
+          <Badge className="bg-yellow-500 text-white text-xs font-medium px-2 py-1 rounded">
+            Sale
+          </Badge>
+        )}
+        {product.tags.includes("new") && (
+          <Badge className="bg-gray-800 text-white text-xs font-medium px-2 py-1 rounded">
+            New
+          </Badge>
+        )}
       </div>
 
-      {/* Product Name */}
-      <h3 className="font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors">
-        {product.name}
-      </h3>
+      {/* Stock Badge - Top Right */}
+      {showStock && stock <= 5 && stock > 0 && (
+        <Badge className="absolute top-3 right-3 bg-purple-500 text-white text-xs font-medium px-2 py-1 rounded">
+          {stock} left
+        </Badge>
+      )}
+
+      {/* Out of Stock Overlay */}
+      {showStock && stock === 0 && (
+        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+          <Badge className="bg-black text-white text-sm font-medium px-3 py-1 rounded">
+            Out of Stock
+          </Badge>
+        </div>
+      )}
     </div>
   );
 };
 
-// Sub-component: Product Features
-interface ProductFeaturesProps {
-  features: string[];
+// Sub-component: Product Info
+interface ProductInfoProps {
+  product: Product;
+  compact?: boolean;
 }
 
-const ProductFeatures: React.FC<ProductFeaturesProps> = ({ features }) => {
-  if (features.length === 0) return null;
-
-  return (
-    <div className="space-y-1">
-      <p className="text-xs font-medium text-gray-700">Key Features:</p>
-      <ul className="text-xs text-gray-600 space-y-1">
-        {features.slice(0, 3).map((feature, index) => (
-          <li key={index} className="flex items-start gap-1">
-            <span className="text-green-500 mt-0.5">•</span>
-            <span className="line-clamp-1">{feature}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-// Sub-component: Product Price
-interface ProductPriceProps {
-  price: number;
-  originalPrice?: number;
-}
-
-const ProductPrice: React.FC<ProductPriceProps> = ({
-  price,
-  originalPrice,
+const ProductInfo: React.FC<ProductInfoProps> = ({
+  product,
+  compact = false,
 }) => {
+  const { name, price, originalPrice } = product;
   const hasDiscount = originalPrice && originalPrice > price;
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-lg font-bold text-gray-900">
-        ${price.toLocaleString()}
-      </span>
-      {hasDiscount && (
-        <span className="text-sm text-gray-500 line-through">
-          ${originalPrice?.toLocaleString()}
+    <div className="space-y-3 px-4">
+      {/* Product Name */}
+      <h3
+        className={cn(
+          "font-semibold text-gray-900 line-clamp-2 group-hover:text-black transition-colors",
+          compact ? "text-sm" : "text-base"
+        )}
+      >
+        {name}
+      </h3>
+
+      {/* Price */}
+      <div className="flex items-center gap-2">
+        <span
+          className={cn(
+            "font-semibold text-gray-900",
+            compact ? "text-base" : "text-lg"
+          )}
+        >
+          From ${price.toLocaleString()}
         </span>
-      )}
+        {hasDiscount && (
+          <span className="text-sm text-gray-400 line-through">
+            ${originalPrice?.toLocaleString()}
+          </span>
+        )}
+      </div>
     </div>
   );
 };
@@ -164,45 +137,32 @@ const ProductPrice: React.FC<ProductPriceProps> = ({
 // Sub-component: Product Actions
 interface ProductActionsProps {
   product: Product;
+  compact?: boolean;
 }
 
-const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
+const ProductActions: React.FC<ProductActionsProps> = ({
+  product,
+  compact = false,
+}) => {
   const handleBuyClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     console.log("Buy clicked for:", product.name);
   };
 
   return (
-    <div className="flex gap-2 pt-2">
-      <Button
-        size="sm"
-        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-        onClick={handleBuyClick}
-        disabled={product.stock === 0}
-      >
-        <ShoppingCart className="w-4 h-4 mr-1" />
-        {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
-      </Button>
-    </div>
-  );
-};
-
-// Sub-component: Product Tags
-interface ProductTagsProps {
-  tags: string[];
-}
-
-const ProductTags: React.FC<ProductTagsProps> = ({ tags }) => {
-  if (tags.length === 0) return null;
-
-  return (
-    <div className="flex flex-wrap gap-1 pt-2">
-      {tags.slice(0, 3).map((tag, index) => (
-        <Badge key={index} variant="secondary" className="text-xs px-2 py-0.5">
-          {tag}
-        </Badge>
-      ))}
-    </div>
+    <Button
+      size={compact ? "sm" : "default"}
+      variant="primary"
+      className={cn(
+        "w-full font-medium mt-4",
+        compact ? "text-sm py-2" : "py-3"
+      )}
+      onClick={handleBuyClick}
+      disabled={product.stock === 0}
+    >
+      <ShoppingCart className={cn("mr-2", compact ? "w-4 h-4" : "w-5 h-5")} />
+      {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+    </Button>
   );
 };
 
@@ -215,44 +175,29 @@ const ProductCard: React.FC<ProductCardProps> = ({
   showFeatures = false,
   compact = false,
 }) => {
+  const router = useRouter();
+
   const handleCardClick = () => {
     if (onProductClick) {
       onProductClick(product);
     } else {
-      // Default behavior - navigate to product page
-      window.open(product.refUrl, "_blank");
+      // Navigate to product details page
+      router.push(`/products/${product.id}`);
     }
   };
 
   return (
     <div
       className={cn(
-        "group relative bg-white rounded-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-gray-300 cursor-pointer",
+        "group relative bg-white border-black overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-gray-300 cursor-pointer",
         compact ? "max-w-[280px]" : "max-w-[320px]",
         className
       )}
       onClick={handleCardClick}
     >
       <ProductImage product={product} showStock={showStock} />
-
-      <div className="p-4 space-y-3">
-        <ProductHeader product={product} />
-
-        <p className="text-sm text-gray-600 line-clamp-2">
-          {product.description}
-        </p>
-
-        {showFeatures && <ProductFeatures features={product.features} />}
-
-        <ProductPrice
-          price={product.price}
-          originalPrice={product.originalPrice}
-        />
-
-        <ProductActions product={product} />
-
-        <ProductTags tags={product.tags} />
-      </div>
+      <ProductInfo product={product} compact={compact} />
+      <ProductActions product={product} compact={compact} />
     </div>
   );
 };
