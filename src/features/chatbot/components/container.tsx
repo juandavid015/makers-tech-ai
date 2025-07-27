@@ -58,9 +58,9 @@ const Chatbot = ({ className }: ChatbotContainerProps) => {
     <Sheet>
       <SheetTrigger
         className={cn(
-          "absolute top-4 right-4 w-12 h-12 rounded-full p-0 flex items-center justify-center cursor-pointer",
+          "fixed top-20 right-4 w-12 h-12 rounded-full p-0 flex items-center justify-center cursor-pointer",
           "bg-gradient-to-br from-purple-200 via-blue-200 to-purple-300 hover:from-purple-300",
-          "hover:via-blue-200 hover:to-purple-300 transition-all duration-300 shadow-lg hover:shadow-xl border-0 backdrop-blur-sm"
+          "hover:via-blue-200 hover:to-purple-300 transition-all duration-300 shadow-lg hover:shadow-xl border-0 backdrop-blur-sm z-50"
         )}
       >
         <Sparkles className="w-5 h-5 text-gray-700" />
