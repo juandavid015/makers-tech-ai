@@ -1,16 +1,16 @@
-import { createOpenAI } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 // AI Provider configuration
 export const aiConfig = {
-  baseURL: "https://api.groq.com/openai/v1",
-  apiKey: process.env.GROQ_API_KEY,
+  baseURL: "https://generativelanguage.googleapis.com/v1beta",
+  apiKey: process.env.GEMINI_API_KEY,
 };
 
 // Create AI client instance
-export const aiClient = createOpenAI(aiConfig);
+export const aiClient = createGoogleGenerativeAI(aiConfig);
 
 // Model configuration
-export const model = aiClient("llama-3.1-8b-instant");
+export const model = aiClient("gemini-2.0-flash-exp");
 
 // Export for easy access
 export { aiClient as createAIClient }; 

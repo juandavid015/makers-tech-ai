@@ -30,8 +30,8 @@ export async function POST(req: Request) {
     }
 
     // Validate API key
-    if (!process.env.GROQ_API_KEY) {
-      console.error('GROQ_API_KEY is not configured');
+    if (!process.env.GEMINI_API_KEY) {
+      console.error('GOOGLE_API_KEY is not configured');
       return new Response('API key not configured', { status: 500 });
     }
 

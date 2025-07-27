@@ -8,8 +8,94 @@ import {
   getRecommendedProducts,
   getProductsByPriceRange,
   getProductsInStock,
-  getProductsWithDiscount
+  getProductsWithDiscount,
+  findProductByName
 } from '@/server/actions/products';
+
+// Product matching intelligence
+const PRODUCT_MAPPINGS: Record<string, string> = {
+  'logitech mx': 'logitech-mx-master-3',
+  'logitech mx master': 'logitech-mx-master-3',
+  'logitech mx master 3': 'logitech-mx-master-3',
+  'hp pavilion': 'hp-pavilion-15',
+  'hp pavilion 15': 'hp-pavilion-15',
+  'macbook': 'macbook-pro-m2',
+  'macbook pro': 'macbook-pro-m2',
+  'macbook pro m2': 'macbook-pro-m2',
+  'dell inspiron': 'dell-inspiron-15',
+  'dell inspiron 15': 'dell-inspiron-15',
+  'corsair k70': 'corsair-k70-rgb',
+  'corsair k70 rgb': 'corsair-k70-rgb',
+  'dell ultrasharp': 'dell-ultrasharp-27',
+  'dell ultrasharp 27': 'dell-ultrasharp-27',
+  'logitech c920': 'logitech-c920',
+  'logitech c920 hd pro': 'logitech-c920',
+};
+
+const CATEGORY_MAPPINGS: Record<string, string> = {
+  'keyboard': 'keyboards',
+  'keyboards': 'keyboards',
+  'mouse': 'mice',
+  'mice': 'mice',
+  'monitor': 'monitors',
+  'monitors': 'monitors',
+  'webcam': 'webcams',
+  'webcams': 'webcams',
+  'headset': 'headsets',
+  'headsets': 'headsets',
+  'laptop': 'laptops',
+  'laptops': 'laptops',
+  'computer': 'laptops',
+  'computers': 'laptops',
+  'accessory': 'accessories',
+  'accessories': 'accessories',
+  'peripheral': 'accessories',
+  'peripherals': 'accessories',
+};
+
+// Helper function to find specific product by name
+const findSpecificProduct = async (query: string): Promise<string | null> => {
+  const normalizedQuery = query.toLowerCase().trim();
+  
+  // Check direct mappings first
+  if (PRODUCT_MAPPINGS[normalizedQuery]) {
+    return PRODUCT_MAPPINGS[normalizedQuery];
+  }
+  
+  // Use the enhanced findProductByName function
+  const product = await findProductByName(normalizedQuery);
+  return product?.id || null;
+};
+
+// Helper function to determine if query is for specific product
+const isSpecificProductQuery = (query: string): boolean => {
+  const normalizedQuery = query.toLowerCase().trim();
+  
+  // Check if query contains specific product names
+  const specificProductKeywords = [
+    'logitech mx', 'hp pavilion', 'macbook', 'dell inspiron',
+    'corsair k70', 'dell ultrasharp', 'logitech c920'
+  ];
+  
+  return specificProductKeywords.some(keyword => 
+    normalizedQuery.includes(keyword)
+  );
+};
+
+// Helper function to determine if query is for category
+const isCategoryQuery = (query: string): boolean => {
+  const normalizedQuery = query.toLowerCase().trim();
+  
+  const categoryKeywords = [
+    'keyboard', 'keyboards', 'mouse', 'mice', 'monitor', 'monitors',
+    'webcam', 'webcams', 'headset', 'headsets', 'laptop', 'laptops',
+    'computer', 'computers', 'accessory', 'accessories', 'peripheral', 'peripherals'
+  ];
+  
+  return categoryKeywords.some(keyword => 
+    normalizedQuery.includes(keyword)
+  );
+};
 
 // Product Carousel Tool
 export const productCarouselTool = createTool({
@@ -52,10 +138,10 @@ export const productCarouselTool = createTool({
       const resolvedProducts = await Promise.all(productPromises);
       products = resolvedProducts.filter(Boolean);
     } else if (category) {
-      // Category-based products
+      // Category-based products with enhanced matching
       products = await getProductsByCategory(category);
     } else if (search) {
-      // Search-based products
+      // Search-based products with enhanced search
       products = await searchProducts(search);
     } else if (priceRange?.min || priceRange?.max) {
       // Price range filter
@@ -101,15 +187,30 @@ export const productCarouselTool = createTool({
 export const productDetailsTool = createTool({
   description: 'Get detailed information about a specific product',
   parameters: z.object({
-    productId: z.string().describe('The ID of the product to get details for'),
+    productId: z.string().optional().describe('The ID of the product to get details for'),
+    productName: z.string().optional().describe('The name of the product to search for'),
     includeSpecs: z.boolean().optional().describe('Whether to include technical specifications'),
     includeFeatures: z.boolean().optional().describe('Whether to include feature list')
   }),
-  execute: async function ({ productId, includeSpecs = true, includeFeatures = true }) {
-    const product = await getProductById(productId);
+  execute: async function ({ productId, productName, includeSpecs = true, includeFeatures = true }) {
+    let finalProductId = productId;
+    
+    // If productName is provided, try to find the product
+    if (productName && !productId) {
+      const foundProductId = await findSpecificProduct(productName);
+      if (foundProductId) {
+        finalProductId = foundProductId;
+      }
+    }
+    
+    if (!finalProductId) {
+      throw new Error(`Product not found: ${productName || productId}`);
+    }
+
+    const product = await getProductById(finalProductId);
     
     if (!product) {
-      throw new Error(`Product with ID ${productId} not found`);
+      throw new Error(`Product with ID ${finalProductId} not found`);
     }
 
     return {
@@ -128,10 +229,29 @@ export const inventorySummaryTool = createTool({
   description: 'Get a summary of current inventory status',
   parameters: z.object({
     category: z.string().optional().describe('Category to summarize (laptops, accessories, etc.)'),
+    productName: z.string().optional().describe('Specific product name to check stock for'),
     includeLowStock: z.boolean().optional().describe('Include low stock alerts'),
     includeOutOfStock: z.boolean().optional().describe('Include out of stock items')
   }),
-  execute: async function ({ category, includeLowStock = true, includeOutOfStock = true }) {
+  execute: async function ({ category, productName, includeLowStock = true, includeOutOfStock = true }) {
+    // If productName is provided, get specific product details instead
+    if (productName) {
+      const productId = await findSpecificProduct(productName);
+      if (productId) {
+        const product = await getProductById(productId);
+        if (product) {
+          return {
+            type: 'product_details',
+            product: {
+              ...product,
+              specs: product.specs,
+              features: product.features
+            }
+          };
+        }
+      }
+    }
+
     const allProducts = await getAllProducts();
     const categoryProducts = category ? await getProductsByCategory(category) : allProducts;
     

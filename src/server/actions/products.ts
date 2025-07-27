@@ -75,7 +75,50 @@ export const getAllProducts = async (): Promise<Product[]> => {
 export const getProductsByCategory = async (categoryId: string): Promise<Product[]> => {
   // Simulate database delay
   await new Promise(resolve => setTimeout(resolve, 120));
-  return db.products.filter(product => product.category === categoryId);
+  
+  // Category mappings for better matching
+  const categoryMappings: Record<string, string> = {
+    'keyboard': 'accessories',
+    'keyboards': 'accessories',
+    'mouse': 'accessories',
+    'mice': 'accessories',
+    'monitor': 'accessories',
+    'monitors': 'accessories',
+    'webcam': 'accessories',
+    'webcams': 'accessories',
+    'headset': 'accessories',
+    'headsets': 'accessories',
+    'laptop': 'laptops',
+    'laptops': 'laptops',
+    'computer': 'laptops',
+    'computers': 'laptops',
+    'accessory': 'accessories',
+    'accessories': 'accessories',
+    'peripheral': 'accessories',
+    'peripherals': 'accessories',
+  };
+  
+  const mappedCategory = categoryMappings[categoryId.toLowerCase()] || categoryId;
+  
+  let products = db.products.filter(product => product.category === mappedCategory);
+  
+  // If searching for specific product types within accessories, filter further
+  if (mappedCategory === 'accessories') {
+    const query = categoryId.toLowerCase();
+    if (query.includes('keyboard')) {
+      products = products.filter(p => p.name.toLowerCase().includes('keyboard'));
+    } else if (query.includes('mouse')) {
+      products = products.filter(p => p.name.toLowerCase().includes('mouse'));
+    } else if (query.includes('monitor')) {
+      products = products.filter(p => p.name.toLowerCase().includes('monitor'));
+    } else if (query.includes('webcam')) {
+      products = products.filter(p => p.name.toLowerCase().includes('webcam'));
+    } else if (query.includes('headset')) {
+      products = products.filter(p => p.name.toLowerCase().includes('headset'));
+    }
+  }
+  
+  return products;
 };
 
 export const getProductById = async (productId: string): Promise<Product | null> => {
@@ -91,12 +134,82 @@ export const searchProducts = async (query: string): Promise<Product[]> => {
   await new Promise(resolve => setTimeout(resolve, 200));
   
   const lowercaseQuery = query.toLowerCase();
-  return db.products.filter(product => 
-    product.name.toLowerCase().includes(lowercaseQuery) ||
-    product.description.toLowerCase().includes(lowercaseQuery) ||
-    product.tags.some(tag => tag.toLowerCase().includes(lowercaseQuery)) ||
-    product.features.some(feature => feature.toLowerCase().includes(lowercaseQuery))
-  );
+  
+  // Enhanced search with better matching
+  return db.products.filter(product => {
+    const productName = product.name.toLowerCase();
+    const productDescription = product.description.toLowerCase();
+    const productTags = product.tags.map(tag => tag.toLowerCase());
+    const productFeatures = product.features.map(feature => feature.toLowerCase());
+    
+    // Exact name match (highest priority)
+    if (productName.includes(lowercaseQuery) || lowercaseQuery.includes(productName)) {
+      return true;
+    }
+    
+    // Partial name match
+    if (productName.includes(lowercaseQuery)) {
+      return true;
+    }
+    
+    // Description match
+    if (productDescription.includes(lowercaseQuery)) {
+      return true;
+    }
+    
+    // Tags match
+    if (productTags.some(tag => tag.includes(lowercaseQuery) || lowercaseQuery.includes(tag))) {
+      return true;
+    }
+    
+    // Features match
+    if (productFeatures.some(feature => feature.includes(lowercaseQuery))) {
+      return true;
+    }
+    
+    return false;
+  });
+};
+
+// Enhanced function to find specific product by name
+export const findProductByName = async (productName: string): Promise<Product | null> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  const normalizedQuery = productName.toLowerCase().trim();
+  
+  // Product name mappings for common variations
+  const productMappings: Record<string, string> = {
+    'logitech mx': 'logitech-mx-master-3',
+    'logitech mx master': 'logitech-mx-master-3',
+    'logitech mx master 3': 'logitech-mx-master-3',
+    'hp pavilion': 'hp-pavilion-15',
+    'hp pavilion 15': 'hp-pavilion-15',
+    'macbook': 'macbook-pro-m2',
+    'macbook pro': 'macbook-pro-m2',
+    'macbook pro m2': 'macbook-pro-m2',
+    'dell inspiron': 'dell-inspiron-15',
+    'dell inspiron 15': 'dell-inspiron-15',
+    'corsair k70': 'corsair-k70-rgb',
+    'corsair k70 rgb': 'corsair-k70-rgb',
+    'dell ultrasharp': 'dell-ultrasharp-27',
+    'dell ultrasharp 27': 'dell-ultrasharp-27',
+    'logitech c920': 'logitech-c920',
+    'logitech c920 hd pro': 'logitech-c920',
+  };
+  
+  // Check direct mappings first
+  if (productMappings[normalizedQuery]) {
+    return await getProductById(productMappings[normalizedQuery]);
+  }
+  
+  // Search for partial matches
+  const matchingProduct = db.products.find(product => {
+    const productName = product.name.toLowerCase();
+    return productName.includes(normalizedQuery) || normalizedQuery.includes(productName);
+  });
+  
+  return matchingProduct || null;
 };
 
 export const getProductsByPriceRange = async (minPrice: number, maxPrice: number): Promise<Product[]> => {
