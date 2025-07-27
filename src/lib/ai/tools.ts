@@ -48,30 +48,30 @@ export const productCarouselTool = createTool({
     // Determine which products to fetch based on parameters
     if (productIds && productIds.length > 0) {
       // Specific product IDs provided
-      products = productIds
-        .map(id => getProductById(id))
-        .filter(Boolean);
+      const productPromises = productIds.map(id => getProductById(id));
+      const resolvedProducts = await Promise.all(productPromises);
+      products = resolvedProducts.filter(Boolean);
     } else if (category) {
       // Category-based products
-      products = getProductsByCategory(category);
+      products = await getProductsByCategory(category);
     } else if (search) {
       // Search-based products
-      products = searchProducts(search);
+      products = await searchProducts(search);
     } else if (priceRange?.min || priceRange?.max) {
       // Price range filter
-      products = getProductsByPriceRange(
+      products = await getProductsByPriceRange(
         priceRange.min || 0, 
         priceRange.max || 9999
       );
     } else if (inStockOnly) {
       // In-stock products only
-      products = getProductsInStock();
+      products = await getProductsInStock();
     } else if (withDiscount) {
       // Products with discounts
-      products = getProductsWithDiscount();
+      products = await getProductsWithDiscount();
     } else {
       // Default to recommended products
-      products = getRecommendedProducts(category, maxProducts);
+      products = await getRecommendedProducts(category, maxProducts);
     }
 
     // Apply additional filters
@@ -106,7 +106,7 @@ export const productDetailsTool = createTool({
     includeFeatures: z.boolean().optional().describe('Whether to include feature list')
   }),
   execute: async function ({ productId, includeSpecs = true, includeFeatures = true }) {
-    const product = getProductById(productId);
+    const product = await getProductById(productId);
     
     if (!product) {
       throw new Error(`Product with ID ${productId} not found`);
@@ -132,8 +132,8 @@ export const inventorySummaryTool = createTool({
     includeOutOfStock: z.boolean().optional().describe('Include out of stock items')
   }),
   execute: async function ({ category, includeLowStock = true, includeOutOfStock = true }) {
-    const allProducts = getAllProducts();
-    const categoryProducts = category ? getProductsByCategory(category) : allProducts;
+    const allProducts = await getAllProducts();
+    const categoryProducts = category ? await getProductsByCategory(category) : allProducts;
     
     const summary: {
       type: string;

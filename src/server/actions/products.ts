@@ -51,24 +51,45 @@ export interface ProductsDatabase {
 }
 
 // Load the products data
-const db: ProductsDatabase = productsData as ProductsDatabase;
+const db: ProductsDatabase = productsData as unknown as ProductsDatabase;
 
 // Product search and filtering functions
-export const getCompanyInfo = (): CompanyInfo => db.company;
+export const getCompanyInfo = async (): Promise<CompanyInfo> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 50));
+  return db.company;
+};
 
-export const getCategories = (): Category[] => db.categories;
+export const getCategories = async (): Promise<Category[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 80));
+  return db.categories;
+};
 
-export const getAllProducts = (): Product[] => db.products;
+export const getAllProducts = async (): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 150));
+  return db.products;
+};
 
-export const getProductsByCategory = (categoryId: string): Product[] => {
+export const getProductsByCategory = async (categoryId: string): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 120));
   return db.products.filter(product => product.category === categoryId);
 };
 
-export const getProductById = (productId: string): Product | undefined => {
-  return db.products.find(product => product.id === productId);
+export const getProductById = async (productId: string): Promise<Product | null> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  const product = db.products.find(product => product.id === productId);
+  return product || null;
 };
 
-export const searchProducts = (query: string): Product[] => {
+export const searchProducts = async (query: string): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 200));
+  
   const lowercaseQuery = query.toLowerCase();
   return db.products.filter(product => 
     product.name.toLowerCase().includes(lowercaseQuery) ||
@@ -78,41 +99,66 @@ export const searchProducts = (query: string): Product[] => {
   );
 };
 
-export const getProductsByPriceRange = (minPrice: number, maxPrice: number): Product[] => {
+export const getProductsByPriceRange = async (minPrice: number, maxPrice: number): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 100));
   return db.products.filter(product => 
     product.price >= minPrice && product.price <= maxPrice
   );
 };
 
-export const getProductsInStock = (): Product[] => {
+export const getProductsInStock = async (): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 80));
   return db.products.filter(product => product.stock > 0);
 };
 
-export const getProductsWithDiscount = (): Product[] => {
+export const getProductsWithDiscount = async (): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 90));
   return db.products.filter(product => product.originalPrice && product.originalPrice > product.price);
 };
 
-export const getProductsByTag = (tag: string): Product[] => {
+export const getProductsByTag = async (tag: string): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 110));
   return db.products.filter(product => 
     product.tags.some(productTag => productTag.toLowerCase().includes(tag.toLowerCase()))
   );
 };
 
 // Software and services functions
-export const getAllSoftware = (): Software[] => db.software;
-
-export const getAllServices = (): Service[] => db.services;
-
-export const getSoftwareById = (softwareId: string): Software | undefined => {
-  return db.software.find(software => software.id === softwareId);
+export const getAllSoftware = async (): Promise<Software[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 70));
+  return db.software;
 };
 
-export const getServiceById = (serviceId: string): Service | undefined => {
-  return db.services.find(service => service.id === serviceId);
+export const getAllServices = async (): Promise<Service[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 70));
+  return db.services;
+};
+
+export const getSoftwareById = async (softwareId: string): Promise<Software | null> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 100));
+  const software = db.software.find(software => software.id === softwareId);
+  return software || null;
+};
+
+export const getServiceById = async (serviceId: string): Promise<Service | null> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 100));
+  const service = db.services.find(service => service.id === serviceId);
+  return service || null;
 };
 
 // Inventory management functions
-export const getInventorySummary = () => {
+export const getInventorySummary = async () => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 120));
+  
   const totalProducts = db.products.length;
   const inStockProducts = db.products.filter(p => p.stock > 0).length;
   const lowStockProducts = db.products.filter(p => p.stock > 0 && p.stock <= 3).length;
@@ -129,15 +175,20 @@ export const getInventorySummary = () => {
   };
 };
 
-export const getLowStockProducts = (): Product[] => {
+export const getLowStockProducts = async (): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 90));
   return db.products.filter(product => product.stock > 0 && product.stock <= 3);
 };
 
 // Recommendation functions
-export const getRecommendedProducts = (category?: string, maxProducts: number = 4): Product[] => {
+export const getRecommendedProducts = async (category?: string, maxProducts: number = 4): Promise<Product[]> => {
+  // Simulate database delay
+  await new Promise(resolve => setTimeout(resolve, 150));
+  
   let filteredProducts = category 
-    ? getProductsByCategory(category)
-    : getAllProducts();
+    ? await getProductsByCategory(category)
+    : await getAllProducts();
   
   // Filter to only in-stock products
   filteredProducts = filteredProducts.filter(p => p.stock > 0);
